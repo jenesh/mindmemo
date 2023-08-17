@@ -2,6 +2,7 @@ const passport = require('passport')
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const JwtStrategy = require('passport-jwt').Strategy
 const { PrismaClient } = require('@prisma/client');
+const {google} = require('googleapis');
 const prisma = new PrismaClient();
 require('dotenv').config();
 
@@ -57,16 +58,43 @@ passport.use(new GoogleStrategy({
      
 
       if (!user) {
+        const oAuth2Client = new google.auth.OAuth2(
+          process.env.Google_Client_ID,
+          process.env.Google_Client_Secret
+        );
+        const userTokens = {
+          access_token: accessToken,
+          refresh_token: refreshToken
+        };
+        oAuth2Client.setCredentials(userTokens);
+      
+        const tasks = google.tasks({ version: 'v1', auth: oAuth2Client });
+        const newTaskList = {
+          title: 'MINDMEMO'
+        };
+        const response = await tasks.tasklists.insert({ requestBody: newTaskList });
+        const createdTaskList = response.data;
         user = await prisma.User.create({
           data: {
             googleId: profile.id,
             name: profile.displayName,
             email: profile.emails[0].value,
+            accessToken:accessToken,
+            refreshToken:refreshToken,
+            taskListId:createdTaskList.id
           },
         });
       }
-      user['accessToken'] = accessToken;
-      user['refreshToken'] = refreshToken;
+      else {
+        await prisma.User.update({
+          where: { googleId: profile.id },
+          data: {
+            accessToken: accessToken,
+            refreshToken:refreshToken,
+          },
+        });
+
+      }
 
       console.log('------passportuser------')
       console.log(user);
@@ -91,5 +119,7 @@ passport.serializeUser((user, done) => {
       done(error, null);
     }
   });
+
+ 
   
   

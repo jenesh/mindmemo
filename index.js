@@ -28,29 +28,9 @@ app.get('/', (req, res) => {
   res.send(`<a href = "/authRoutes/auth/google"> Authenticate with Google </a>`)
 });
 
-app.listen(3000, () => {
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
   console.log('Server is running on port 3000');
 });
 
 
-// app.get('/', (req, res) => {
-//   res.send(`<a href = "/auth/google"> Authenticate with Google </a>`)
-// });
-
-// app.get('/auth/google', 
-// passport.authenticate('google', {scope: ['email', 'profile']})
-// )
-
-// app.get('/google/callback',
-// passport.authenticate('google', {
-//       successRedirect:'/protected',
-//       failureRedirect: '/auth/failure'
-// })
-// )
-
-// app.get('/protected', (req, res) => {
-//   res.send('Hello');
-// })
-// app.get('/auth/failure', (req, res) => {
-//   res.send('Something went wrong...');
-// })

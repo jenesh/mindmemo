@@ -13,8 +13,8 @@ const googleCallback = async (req, res) => {
     const user = req.user;
     const token = jwt.sign({user: user.id}, process.env.secret_key)
     res.cookie('jwt', token)
-    res.cookie('accessToken', user?.accessToken);
-    res.cookie('refreshToken', user.refreshToken ? user?.refreshToken:'');
+    // res.cookie('accessToken', user?.accessToken);
+    // res.cookie('refreshToken', user.refreshToken ? user?.refreshToken:'');
   }
   
 
