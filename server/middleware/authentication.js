@@ -7,8 +7,10 @@ async function notLoggedIn(req, res, next) {
   const token = req.cookies['jwt'];
   if (token) {
     try {
+      console.log('-----notloggedin-------') 
+      console.log(req.user)
       const payload = jwt.verify(token, process.env.secret_key);
-      if (payload) {
+      if (payload && payload.user == req?.user.id) {
         console.log('-----payloaduser-------')
         console.log(payload.user);
         console.log('------------')

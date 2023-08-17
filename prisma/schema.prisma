@@ -22,11 +22,14 @@ model userMemoDetails {
 }
 
 model User {
-  id         Int              @id @default(autoincrement())
-  googleId   String           @unique
-  name       String
-  email      String
-  memos      userMemoDetails[]
+  id           Int              @id @default(autoincrement())
+  googleId     String           @unique
+  name         String
+  email        String
+  accessToken  String           @db.VarChar(255)
+  refreshToken String?
+  taskListId   String           @db.VarChar(255)
+  memos        userMemoDetails[]
 }
 
 

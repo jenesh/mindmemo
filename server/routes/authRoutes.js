@@ -14,7 +14,7 @@ const {notLoggedIn} = require('../middleware/authentication')
 
   
   app.get('/auth/google', 
-  passport.authenticate('google', {scope: ['email', 'profile','https://www.googleapis.com/auth/calendar']})
+  passport.authenticate('google', {scope: ['email', 'profile','https://www.googleapis.com/auth/calendar', 'https://www.googleapis.com/auth/tasks']})
   )
 
   app.get('/google/callback',
