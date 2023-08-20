@@ -39,7 +39,7 @@ opts.secretOrKey = process.env.secret_key;
 passport.use(new GoogleStrategy({
     clientID: process.env.Google_Client_ID,
     clientSecret: process.env.Google_Client_Secret,
-    callbackURL: "http://localhost:3000/authRoutes/google/callback",
+    callbackURL: "https://mindmemo.onrender.com/authRoutes/google/callback",
     accessType:'offline',
     scope: ['https://www.googleapis.com/auth/calendar']
     // "https://accounts.google.com/", 'https://www.googleapis.com/auth/calendar.readonly','https://www.googleapis.com/auth/plus.login'
