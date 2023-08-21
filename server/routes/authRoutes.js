@@ -25,12 +25,12 @@ const {notLoggedIn} = require('../middleware/authentication')
   }),
   )
   
-  app.get('/protected', notLoggedIn, (req, res) => {
+  app.get('/protected', (req, res) => {
     console.log('------api------')
     console.log(req.user);
     console.log('------------')
-    AuthenticationController.googleCallback(req, res)
-    res.send('Hello');
+    // AuthenticationController.googleCallback(req, res)
+    res.redirect(`https://9c4c-103-251-227-39.ngrok-free.app?data=${encodeURIComponent(JSON.stringify(req.user))}`)
   })
 
   app.get('/auth/failure', (req, res) => {
