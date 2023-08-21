@@ -67,7 +67,8 @@ function App() {
           <p>Loading...</p>
         )}
       </div>
-      <a href={import.meta.env.VITE_APP_AUTH_URL}>
+      <a
+        href={`${import.meta.env.VITE_APP_SERVER_URL}//authRoutes/auth/google`}>
         Authenticate Google Tasks option
       </a>
     </>
