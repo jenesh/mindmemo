@@ -5,6 +5,8 @@ function App() {
   const [userData, setUserData] = useState(null);
 
   const postTask = async (title, url, notes, dataTime, userId) => {
+    console.log(here);
+    console.log(import.meta.env.VITE_APP_SERVER_URL);
     const response = await fetch(
       `${import.meta.env.VITE_APP_SERVER_URL}/userDetails/userMemo`,
       {
