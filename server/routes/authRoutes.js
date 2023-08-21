@@ -30,7 +30,7 @@ const {notLoggedIn} = require('../middleware/authentication')
     console.log(req.user);
     console.log('------------')
     // AuthenticationController.googleCallback(req, res)
-    res.redirect(`https://9c4c-103-251-227-39.ngrok-free.app?data=${encodeURIComponent(JSON.stringify(req.user))}`)
+    res.redirect(`chrome-extension://bpnckcgakpagklpfimnkeenbngpbjian/options.html/?data=${encodeURIComponent(JSON.stringify(req.user))}`)
   })
 
   app.get('/auth/failure', (req, res) => {
