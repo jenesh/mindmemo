@@ -49,7 +49,9 @@ function App() {
         userId,
       );
 
-      if (response) window.close();
+      console.log(response);
+
+      // if (response) window.close();
     } else {
       const storedData = localStorage.getItem("userData");
       if (storedData) {
