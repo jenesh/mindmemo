@@ -21,6 +21,7 @@ function App() {
       },
     );
     const responseData = await response.json();
+    return responseData;
   };
 
   useEffect(() => {
@@ -40,14 +41,15 @@ function App() {
       const parsedData = JSON.parse(decodeURIComponent(responsePostTask));
       const userId = JSON.parse(localStorage.getItem("mindmeo-userData")).id;
 
-      postTask(
+      let response = postTask(
         parsedData.title,
         parsedData.url,
         parsedData.notes,
         parsedData.dataTime,
         userId,
       );
-      window.close();
+
+      if (response) window.close();
     } else {
       const storedData = localStorage.getItem("userData");
       if (storedData) {
