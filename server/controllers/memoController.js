@@ -43,16 +43,7 @@ async function addEntry(userId, title, url, dataTime, notes) {
   }
 }
 
-async function userMemoTask(
-  res,
-  title,
-  url,
-  dateTiming,
-  notes,
-  accessToken,
-  refreshToken,
-  taskListId,
-) {
+async function userMemoTask(res, title, url, dateTiming, notes, accessToken, refreshToken, taskListId) {
   const oAuth2Client = new google.auth.OAuth2(
     process.env.Google_Client_ID,
     process.env.Google_Client_Secret,
@@ -67,8 +58,15 @@ async function userMemoTask(
 
   const newTask = {
     title: title,
-    description: `URL: ${url}\nNotes: ${notes}`,
+    notes: notes,
     due: dateTiming,
+    links: [
+      {
+        type: "url",
+        description: "Resource Link",
+        link: url
+      }
+    ],
     defaultReminders: [
       { method: "email", minutes: 60 },
       { method: "popup", minutes: 30 },
@@ -148,9 +146,10 @@ async function userMemoTask(
 // }
 
 const userMemo = async (req, res) => {
-  const { title, url, dataTime, notes, userId } = req.body;
+  const { title, url, dataDate, time, notes, userId } = req.body;
   console.log(req.body);
-  const dateTiming = new Date(dataTime).toISOString();
+  const fullDateTime = `${dataDate}${time}`;
+  const dateTiming = new Date(fullDateTime).toISOString();
   try {
     // const user = req.user;
     const newEntry = await addEntry(userId, title, url, dateTiming, notes);
@@ -167,17 +166,8 @@ const userMemo = async (req, res) => {
         taskListId: true,
       },
     });
-
-    await userMemoTask(
-      res,
-      title,
-      url,
-      dateTiming,
-      notes,
-      user.accessToken,
-      user.refreshToken,
-      user.taskListId,
-    );
+  
+    await userMemoTask(res, title, url, dateTiming, notes, user.accessToken, user.refreshToken, user.taskListId);
 
     // res.status(201).json(newEntry);
   } catch (error) {
