@@ -43,16 +43,7 @@ async function addEntry(userId, title, url, dataTime, notes) {
   }
 }
 
-async function userMemoTask(
-  res,
-  title,
-  url,
-  dateTiming,
-  notes,
-  accessToken,
-  refreshToken,
-  taskListId,
-) {
+async function userMemoTask(res, title, url, dateTiming, notes, accessToken, refreshToken, taskListId) {
   const oAuth2Client = new google.auth.OAuth2(
     process.env.Google_Client_ID,
     process.env.Google_Client_Secret,
@@ -67,7 +58,7 @@ async function userMemoTask(
 
   const newTask = {
     title: title,
-    description: `URL: ${url}\nNotes: ${notes}`,
+    notes: `Notes: ${notes}\nURL: ${url}`,
     due: dateTiming,
     defaultReminders: [
       { method: "email", minutes: 60 },
@@ -88,7 +79,7 @@ async function userMemoTask(
   }
 }
 
-// function userMemmoEvent(){
+// function userMemmoEvent(title, url, dateTiming, notes, timeZone, accessToken, refreshToken){
 
 //   const oauth2Client = new google.auth.OAuth2(
 //     process.env.Google_Client_ID,
@@ -96,8 +87,8 @@ async function userMemoTask(
 //   );
 
 //   const userTokens = {
-//     access_token: req.cookies.accessToken?req.cookies.accessToken:req.headers.accesstoken,
-//     refresh_token: req.cookies.refreshToken?req.cookies.refreshToken:req.headers.refreshtoken
+//     access_token: accessToken,
+//     refresh_token: refreshToken,
 //   };
 
 //   oauth2Client.setCredentials(userTokens);
@@ -108,10 +99,10 @@ async function userMemoTask(
 //   // Example: Create an event
 //   const event = {
 //     summary: title,
-//     description:`URL: ${url}\nNotes: ${notes}`,
+//     description:`Notes: ${notes}\nURL: ${url}`,
 //     start: {
 //       dateTime: dateTiming,
-//       timeZone: 'Asia/Kolkata',
+//       timeZone: timeZone,
 //     },
 //     reminders: {
 //       useDefault: false,
@@ -122,12 +113,12 @@ async function userMemoTask(
 //   }
 
 //   };
-//   const startTime = new Date(event.start.dateTime);
-//   const endTime = new Date(startTime.getTime() + 30 * 60 * 1000);
-//   event.end = {
-//     dateTime: endTime.toISOString(),
-//     timeZone: 'Asia/Kolkata',
-// };
+//     //  const startTime = new Date(dateTiming); // Use dateTiming instead of event.start.dateTime
+//     //  const endTime = new Date(startTime.getTime() + 30 * 60 * 1000);
+//      event.end = {
+//      dateTime: new Date(new Date(dateTiming).getTime() + 30 * 60 * 1000).toISOString(),
+//      timeZone: timeZone,
+//    };
 
 //   calendar.events.insert(
 //     {
@@ -148,9 +139,10 @@ async function userMemoTask(
 // }
 
 const userMemo = async (req, res) => {
-  const { title, url, dataTime, notes, userId } = req.body;
+  const { title, url, dataDate, time, notes, timeZone, userId } = req.body;
   console.log(req.body);
-  const dateTiming = new Date(dataTime).toISOString();
+  const fullDateTime = `${dataDate} ${time}`;
+  const dateTiming = new Date(fullDateTime).toISOString();
   try {
     // const user = req.user;
     const newEntry = await addEntry(userId, title, url, dateTiming, notes);
@@ -167,17 +159,9 @@ const userMemo = async (req, res) => {
         taskListId: true,
       },
     });
-
-    await userMemoTask(
-      res,
-      title,
-      url,
-      dateTiming,
-      notes,
-      user.accessToken,
-      user.refreshToken,
-      user.taskListId,
-    );
+    // await userMemmoEvent(res, title, url, dateTiming, notes, timeZone, user.accessToken, user.refreshToken);
+  
+    await userMemoTask(res, title, url, dateTiming, notes, user.accessToken, user.refreshToken, user.taskListId);
 
     // res.status(201).json(newEntry);
   } catch (error) {
