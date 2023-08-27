@@ -95,7 +95,7 @@ function PostData() {
                 d="M9,42h5v-8H6v5C6,40.657,7.343,42,9,42z"></path>
             </svg>
             <div className="text-[#030C2D] text-base font-Inter font-medium">
-              <a href="calendar.google.com" target="_blank">
+              <a href="https://calendar.google.com" target="_blank">
                 Visit Google Calendar
               </a>
             </div>
