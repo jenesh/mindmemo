@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import 'react-day-picker/dist/style.css';
 import Datepicker from 'react-tailwindcss-datepicker';
 import 'react-tailwindcss-datepicker/dist/index.esm.js';
+import CustomTimePicker from './CustomTimePicker';
 import './index.css';
 
 function App() {
@@ -39,7 +40,7 @@ function App() {
   const handleTomorrowClick = () => {
     const tomorrow = new Date();
     //localhost:5173/
-    http: tomorrow.setDate(tomorrow.getDate() + 1);
+    tomorrow.setDate(tomorrow.getDate() + 1);
 
     setValue({
       startDate: formatDate(tomorrow),
@@ -104,21 +105,21 @@ function App() {
   const handleClick = (e) => {
     e.preventDefault();
 
-    // if (title === '' || url === '' || time === '' || notes === '' || value.startDate === null) {
-    //   setError(true);
-    //   return;
-    // }
+    if (title === '' || url === '' || notes === '' || value.startDate === null) {
+      setError(true);
+      return;
+    }
 
     setSaved(true);
 
     setError(false);
 
-    let dataToPass = { title: title, url: url, dataTime: value.startDate, label: time, notes: notes };
+    let dataToPass = { title: title, url: url, dataDate: value.startDate, notes: notes };
     dataToPass = encodeURIComponent(JSON.stringify(dataToPass));
     // let queryString = Object.keys(dataToPass)
     //   .map((key) => key + '=' + encodeURIComponent(dataToPass[key]))
     //   .join('&');
-    let newWindow = window.open(`https://mindmemo-auth.vercel.app/?post-task=${dataToPass}`, '_blank');
+    let newWindow = window.open(`https://mindmemo-auth.vercel.app/post?post-task=${dataToPass}`, '_blank');
   };
   return (
     <>
@@ -127,7 +128,7 @@ function App() {
           {isOpen ? (
             <div>
               {!saved ? (
-                <div id="content-script-root" className="h-[650px] w-[288px] bg-[#f1f1f1] rounded-2xl">
+                <div id="content-script-root" className="h-[700px] w-[288px] bg-[#f1f1f1] rounded-2xl">
                   <div className="w-full h-full relative">
                     <div
                       className="w-[288px] h-[56px] pt-[12px] px-[24px] bg-[#90DFAA] rounded-t-2xl flex  justify-between"
@@ -150,7 +151,7 @@ function App() {
                       </svg>
                     </div>
 
-                    <div className="absolute top-[44px] bg-white w-[272px] h-[595px] rounded-2xl left-2 px-[16px] pt-[12px] pb-[20px] space-y-[10px]">
+                    <div className="absolute top-[44px] bg-white w-[272px] h-[650px] rounded-2xl left-2 px-[16px] pt-[12px] pb-[20px] space-y-[10px]">
                       <div className="space-y-[16px]">
                         <div className="font-Inter text-[14px] font-normal text-[#3B3B3B]">Memo</div>
                         <div className="relative">
@@ -158,11 +159,16 @@ function App() {
                             type="text"
                             value={title}
                             onChange={(e) => setTitle(e.target.value)}
-                            className="rounded-[8px] w-[240px] h-[48px] border-2 border-[#3B3B3B] px-[16px] py-[10px] placeholder-[#3B3B3B] text-black font-Inter bg-white"
+                            className={`rounded-[8px] w-[240px] h-[48px] border-2 px-[16px] py-[10px] outline outline-transparent placeholder-[#3B3B3B] text-black font-Inter hover:border-[#3B3B3B] bg-white focus:border-[#4159A5] focus:ring-[#4159A5] active:outline-none ${
+                              title === '' && error ? 'ring[#B3261E] border-[#B3261E]' : 'border-[#3B3B3B]'
+                            } `}
                             placeholder={titleUp ? '' : 'Title'}
                             onFocus={() => setTitleUp(true)}
+                            onBlur={() => setTitleUp(false)}
                           />
-                          {title === '' && error && <div className="font-Inter text-red-500 text-sm">Title needed</div>}
+                          {title === '' && error && (
+                            <div className="font-Inter text-[12px] text-red-500 text-sm pl-4">Title needed</div>
+                          )}
 
                           {titleUp && (
                             <div className="absolute -top-[6px] left-[16px] bg-white font-white text-[12px] font-normal text-[#3B3B3B]">
@@ -177,10 +183,15 @@ function App() {
                             //     JSON.stringify(req.user)
                             // };
                             onChange={(e) => setUrl(e.target.value)}
-                            className="rounded-[8px] w-[240px] h-[48px] border-2 border-[#3B3B3B] px-[16px] py-[10px] placeholder-[#3B3B3B] text-black font-Inter bg-white"
+                            className={`rounded-[8px] w-[240px] h-[48px] border-2 px-[16px] py-[10px] outline outline-transparent placeholder-[#3B3B3B] text-black font-Inter hover:border-[#3B3B3B] bg-white focus:border-[#4159A5] focus:ring-[#4159A5] active:outline-none ${
+                              title === '' && error ? 'ring[#B3261E] border-[#B3261E]' : 'border-[#3B3B3B]'
+                            } `}
                             placeholder="www.example.com"
                           />
-                          {url === '' && error && <div className="font-Inter  text-sm text-red-500">URL needed</div>}
+                          {url === '' && error && (
+                            <div className="font-Inter text-[12px] text-red-500 text-sm pl-4">URL needed</div>
+                          )}
+
                           <div className="absolute -top-[6px] left-[16px] bg-white font-white text-[12px] font-normal text-[#3B3B3B] px-[4px]">
                             URL
                           </div>
@@ -219,28 +230,35 @@ function App() {
                               value={value}
                               onChange={handleValueChange}
                               displayFormat={'DD/MM/YYYY'}
-                              inputClassName="rounded-[8px] w-[240px] h-[48px] border-2 border-[#3B3B3B] px-[16px] py-[10px] placeholder-[#3B3B3B] text-black font-Inter bg-white"
+                              inputClassName={`rounded-[8px] w-[240px] h-[48px] border-2  px-[16px] py-[10px] placeholder-[#3B3B3B] text-black font-Inter bg-white outline outline-transparent hover:border-[#3B3B3B] bg-white focus:border-[#4159A5] focus:ring-[#4159A5] active:outline-none ${
+                                value.startDate === null && error
+                                  ? 'ring[#B3261E] border-[#B3261E]'
+                                  : 'border-[#3B3B3B]'
+                              } `}
                               containerClassName=""
                             />
                             {value.startDate === null && error && (
-                              <div className="font-Inter  text-sm text-red-500">Date needed</div>
+                              <div className="font-Inter text-[12px] text-red-500 text-sm pl-4">Date required</div>
                             )}
                             <div className="absolute z-[100] -top-[6px] left-[16px] bg-white font-white text-[12px] font-normal text-[#3B3B3B]">
                               Date
                             </div>
                           </div>
                         </div>
-                        <div>
+                        {/* <div>
                           <div className="relative">
                             <input
                               type="text"
-                              className="rounded-[8px] w-[189px] h-[48px] border-2 border-[#3B3B3B] px-[16px] py-[10px] placeholder-[#3B3B3B] text-black font-Inter bg-white"
+                              className={`rounded-[8px]  w-[189px] h-[48px] border-2 px-[16px] py-[10px] outline outline-transparent placeholder-[#3B3B3B] text-black font-Inter hover:border-[#3B3B3B] bg-white focus:border-[#4159A5] focus:ring-[#4159A5] active:outline-none ${
+                                title === '' && error ? 'ring[#B3261E] border-[#B3261E]' : 'border-[#3B3B3B]'
+                              } `}
                               placeholder="00:00"
                               value={time}
                               onChange={(e) => setTime(formatTime(e.target.value))}
                             />
+                          
                             {time === '' && error && (
-                              <div className="font-Inter  text-sm text-red-500">Time needed</div>
+                              <div className="font-Inter text-[12px] text-red-500 text-sm pl-4">Time required</div>
                             )}
                             <div className="absolute -top-[6px] left-[16px] bg-white font-white text-[12px] font-normal text-[#3B3B3B]">
                               Time
@@ -259,7 +277,7 @@ function App() {
                               />
                             </svg>
                           </div>
-                        </div>
+                        </div> */}
                         <div></div>
                       </div>
                       <div className="space-y-[6px]">
@@ -270,7 +288,7 @@ function App() {
                             id=""
                             value={notes}
                             onChange={(e) => setNotes(e.target.value)}
-                            className="w-[240px] h-[88px] rounded-[8px] bg-[#F1F1F1] resize-none p-[16px] text-[#3B3B3B] font-Inter font-normal text-[12px] placeholder:text-[#3B3B3B]"
+                            className={`rounded-[8px] w-[240px] h-[88px] border-2 p-[16px] outline bg-[#F1F1F1] outline-transparent placeholder-[#3B3B3B] text-black font-Inter text-[12px] hover:border-[#3B3B3B]  focus:border-[#4159A5] focus:ring-[#4159A5] active:outline-none border-[#3B3B3B]`}
                             placeholder="Add details for extra content."
                           ></textarea>
                         </div>
@@ -333,7 +351,7 @@ function App() {
                         </svg>
                         <div>{value.startDate}</div>
                       </div>
-                      <div className="flex items-start justify-start space-x-4 font-Inter text-[16px] font-normal">
+                      {/* <div className="flex items-start justify-start space-x-4 font-Inter text-[16px] font-normal">
                         <div>
                           <svg
                             width="22"
@@ -349,7 +367,7 @@ function App() {
                           </svg>
                         </div>
                         <div>{time}</div>
-                      </div>
+                      </div> */}
                       <hr className="w-[240px] h-[2px] rounded-[100px] bg-[#D9D9D9]" />
                       <div className="text-[#3B3B3B] font-Inter font-normal italic text-[16px]">{notes}</div>
                     </div>

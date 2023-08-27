@@ -34,12 +34,15 @@ function PostData() {
 
     const parsedData = JSON.parse(decodeURIComponent(responsePostTask));
     const userId = JSON.parse(localStorage.getItem("mindmeo-userData")).id;
+    const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
 
     let response = postTask(
       parsedData.title,
       parsedData.url,
       parsedData.notes,
-      parsedData.dataTime,
+      parsedData.dataDate,
+      parsedData.time,
+      timeZone,
       userId,
     );
 
