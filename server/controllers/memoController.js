@@ -139,10 +139,10 @@ async function userMemoTask(res, title, url, dateTiming, notes, accessToken, ref
 // }
 
 const userMemo = async (req, res) => {
-  const { title, url, dataDate, time, notes, timeZone, userId } = req.body;
+  const { title, url, dataDate, notes, userId } = req.body;
   console.log(req.body);
-  const fullDateTime = `${dataDate} ${time}`;
-  const dateTiming = new Date(fullDateTime).toISOString();
+  // const fullDateTime = `${dataDate} ${time}`;
+  const dateTiming = new Date(dataDate).toISOString();
   try {
     // const user = req.user;
     const newEntry = await addEntry(userId, title, url, dateTiming, notes);
