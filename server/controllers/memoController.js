@@ -43,110 +43,103 @@ async function addEntry(userId, title, url, dataTime, notes) {
   }
 }
 
-async function userMemoTask(res, title, url, dateTiming, notes, accessToken, refreshToken, taskListId) {
-  const oAuth2Client = new google.auth.OAuth2(
+// async function userMemoTask(res, title, url, dateTiming, notes, accessToken, refreshToken, taskListId) {
+//   const oAuth2Client = new google.auth.OAuth2(
+//     process.env.Google_Client_ID,
+//     process.env.Google_Client_Secret,
+//   );
+//   const userTokens = {
+//     access_token: accessToken,
+//     refresh_token: refreshToken,
+//   };
+//   oAuth2Client.setCredentials(userTokens);
+
+//   const tasks = google.tasks({ version: "v1", auth: oAuth2Client });
+
+//   const newTask = {
+//     title: title,
+//     notes: `Notes: ${notes}\nURL: ${url}`,
+//     due: dateTiming,
+//     defaultReminders: [
+//       { method: "email", minutes: 60 },
+//       { method: "popup", minutes: 30 },
+//     ],
+//   };
+
+//   try {
+//     const response = await tasks.tasks.insert({
+//       requestBody: newTask,
+//       tasklist: taskListId,
+//     });
+//     console.log(response);
+//     res.status(200).send("Event created");
+//   } catch (error) {
+//     console.log(error);
+//     res.status(500).json({ error: "Error while adding entry" });
+//   }
+// }
+
+function userMemmoEvent(title, url, dateTiming, notes, timeZone, accessToken, refreshToken){
+
+  const oauth2Client = new google.auth.OAuth2(
     process.env.Google_Client_ID,
-    process.env.Google_Client_Secret,
+    process.env.Google_Client_Secret
   );
+
   const userTokens = {
     access_token: accessToken,
     refresh_token: refreshToken,
   };
-  oAuth2Client.setCredentials(userTokens);
 
-  const tasks = google.tasks({ version: "v1", auth: oAuth2Client });
+  oauth2Client.setCredentials(userTokens);
 
-  const newTask = {
-    title: title,
-    notes: notes,
-    due: dateTiming,
-    links: [
-      {
-        type: "url",
-        description: "Resource Link",
-        link: url
-      }
-    ],
-    defaultReminders: [
-      { method: "email", minutes: 60 },
-      { method: "popup", minutes: 30 },
-    ],
-  };
+  // Create a Calendar API client
+  const calendar = google.calendar('v3');
 
-  try {
-    const response = await tasks.tasks.insert({
-      requestBody: newTask,
-      tasklist: taskListId,
-    });
-    console.log(response);
-    res.status(200).send("Event created");
-  } catch (error) {
-    console.log(error);
-    res.status(500).json({ error: "Error while adding entry" });
+  // Example: Create an event
+  const event = {
+    summary: title,
+    description:`Notes: ${notes}\nURL: ${url}`,
+    start: {
+      dateTime: dateTiming,
+      timeZone: timeZone,
+    },
+    reminders: {
+      useDefault: false,
+      overrides: [
+          { method: 'email', minutes: 30 },
+          { method: 'popup', minutes: 15 }
+      ],
   }
+
+  };
+    //  const startTime = new Date(dateTiming); // Use dateTiming instead of event.start.dateTime
+    //  const endTime = new Date(startTime.getTime() + 30 * 60 * 1000);
+     event.end = {
+     dateTime: new Date(new Date(dateTiming).getTime() + 30 * 60 * 1000).toISOString(),
+     timeZone: timeZone,
+   };
+
+  calendar.events.insert(
+    {
+      auth: oauth2Client,
+      calendarId: 'primary',
+      resource: event,
+    },
+    (err, response) => {
+      if (err) {
+        console.error('Error creating event:', err);
+        res.status(500).send('Error creating event');
+        return;
+      }
+      console.log('Event created:', response.data);
+      res.status(200).send('Event created');
+    }
+  );
 }
 
-// function userMemmoEvent(){
-
-//   const oauth2Client = new google.auth.OAuth2(
-//     process.env.Google_Client_ID,
-//     process.env.Google_Client_Secret
-//   );
-
-//   const userTokens = {
-//     access_token: req.cookies.accessToken?req.cookies.accessToken:req.headers.accesstoken,
-//     refresh_token: req.cookies.refreshToken?req.cookies.refreshToken:req.headers.refreshtoken
-//   };
-
-//   oauth2Client.setCredentials(userTokens);
-
-//   // Create a Calendar API client
-//   const calendar = google.calendar('v3');
-
-//   // Example: Create an event
-//   const event = {
-//     summary: title,
-//     description:`URL: ${url}\nNotes: ${notes}`,
-//     start: {
-//       dateTime: dateTiming,
-//       timeZone: 'Asia/Kolkata',
-//     },
-//     reminders: {
-//       useDefault: false,
-//       overrides: [
-//           { method: 'email', minutes: 30 },
-//           { method: 'popup', minutes: 15 }
-//       ],
-//   }
-
-//   };
-//   const startTime = new Date(event.start.dateTime);
-//   const endTime = new Date(startTime.getTime() + 30 * 60 * 1000);
-//   event.end = {
-//     dateTime: endTime.toISOString(),
-//     timeZone: 'Asia/Kolkata',
-// };
-
-//   calendar.events.insert(
-//     {
-//       auth: oauth2Client,
-//       calendarId: 'primary',
-//       resource: event,
-//     },
-//     (err, response) => {
-//       if (err) {
-//         console.error('Error creating event:', err);
-//         res.status(500).send('Error creating event');
-//         return;
-//       }
-//       console.log('Event created:', response.data);
-//       res.status(200).send('Event created');
-//     }
-//   );
-// }
-
 const userMemo = async (req, res) => {
-  const { title, url, dataDate, time, notes, userId } = req.body;
+  const { title, url, dataDate, time, notes, timeZone, userId } = req.body;
   console.log(req.body);
   const fullDateTime = `${dataDate} ${time}`;
   const dateTiming = new Date(fullDateTime).toISOString();
@@ -166,8 +159,9 @@ const userMemo = async (req, res) => {
         taskListId: true,
       },
     });
+    await userMemmoEvent(title, url, dateTiming, notes, timeZone, user.accessToken, user.refreshToken);
   
-    await userMemoTask(res, title, url, dateTiming, notes, user.accessToken, user.refreshToken, user.taskListId);
+    // await userMemoTask(res, title, url, dateTiming, notes, user.accessToken, user.refreshToken, user.taskListId);
 
     // res.status(201).json(newEntry);
   } catch (error) {
