@@ -151,15 +151,15 @@ function App() {
                       </svg>
                     </div>
 
-                    <div className="absolute top-[44px] bg-white w-[272px] h-[650px] rounded-2xl left-2 px-[16px] pt-[12px] pb-[20px] space-y-[10px]">
-                      <div className="space-y-[16px]">
-                        <div className="font-Inter text-[14px] font-normal text-[#3B3B3B]">Memo</div>
-                        <div className="relative">
+                    <div className="absolute top-[44px] bg-white w-[272px] h-[649px] rounded-2xl left-2 px-[16px] pt-[16px] pb-[20px] space-y-[24px]">
+                      <div className="">
+                        <div className="font-Inter text-[14px] font-normal text-[#3B3B3B] mb-[14px]">Memo details</div>
+                        <div className="relative mb-[8px]">
                           <input
                             type="text"
                             value={title}
                             onChange={(e) => setTitle(e.target.value)}
-                            className={`rounded-[8px] w-[240px] h-[48px] border-2 px-[16px] py-[10px] outline outline-transparent placeholder-[#3B3B3B] text-black font-Inter hover:border-[#3B3B3B] bg-white focus:border-[#4159A5] focus:ring-[#4159A5] active:outline-none ${
+                            className={`rounded-[8px] w-[240px] h-[48px] border-2 px-[16px] py-[12px] outline outline-transparent placeholder-[#3B3B3B] text-black font-Inter hover:border-[#3B3B3B] bg-white focus:border-[#4159A5] focus:ring-[#4159A5] active:outline-none ${
                               title === '' && error ? 'ring[#B3261E] border-[#B3261E]' : 'border-[#3B3B3B]'
                             } `}
                             placeholder={titleUp ? '' : 'Title'}
@@ -167,11 +167,11 @@ function App() {
                             onBlur={() => setTitleUp(false)}
                           />
                           {title === '' && error && (
-                            <div className="font-Inter text-[12px] text-red-500 text-sm pl-4">Title needed</div>
+                            <div className="font-Inter text-[12px]  text-red-500 text-sm pl-4">Title needed</div>
                           )}
 
                           {titleUp && (
-                            <div className="absolute -top-[6px] left-[16px] bg-white font-white text-[12px] font-normal text-[#3B3B3B]">
+                            <div className="absolute -top-[6px] px-[4px] left-[16px] bg-white font-white text-[12px] font-normal text-[#3B3B3B]">
                               Title
                             </div>
                           )}
@@ -183,7 +183,7 @@ function App() {
                             //     JSON.stringify(req.user)
                             // };
                             onChange={(e) => setUrl(e.target.value)}
-                            className={`rounded-[8px] w-[240px] h-[48px] border-2 px-[16px] py-[10px] outline outline-transparent placeholder-[#3B3B3B] text-black font-Inter hover:border-[#3B3B3B] bg-white focus:border-[#4159A5] focus:ring-[#4159A5] active:outline-none ${
+                            className={`rounded-[8px] w-[240px] h-[48px] border-2 px-[16px] py-[12px] outline outline-transparent placeholder-[#3B3B3B] text-black font-Inter hover:border-[#3B3B3B] bg-white focus:border-[#4159A5] focus:ring-[#4159A5] active:outline-none ${
                               title === '' && error ? 'ring[#B3261E] border-[#B3261E]' : 'border-[#3B3B3B]'
                             } `}
                             placeholder="www.example.com"
@@ -197,23 +197,23 @@ function App() {
                           </div>
                         </div>
                       </div>
-                      <div className="flex flex-col space-y-[16px]">
-                        <div className="font-Inter text-[14px] font-normal text-[#3B3B3B]">Remind me</div>
-                        <div className="flex justify-between space-x-2">
+                      <div className="flex flex-col">
+                        <div className="font-Inter text-[14px] font-normal text-[#3B3B3B] mb-[14px]">Remind me</div>
+                        <div className="flex justify-between  mb-[8px]">
                           <button
-                            className=" text-[#3B3B3B] px-[6px] py-[8px] rounded-[16px] p border-[1px] border-[#B4B4B4]"
+                            className=" text-[#3B3B3B] px-[8px] py-[8px] rounded-[16px]  border-[1px] border-[#B4B4B4]"
                             onClick={handleTodayClick}
                           >
                             Today
                           </button>
                           <button
-                            className=" text-[#3B3B3B] px-[6px] py-[8px] rounded-[16px] border-[1px] border-[#B4B4B4] "
+                            className=" text-[#3B3B3B] px-[8px] py-[8px] rounded-[16px] border-[1px] border-[#B4B4B4] "
                             onClick={handleTomorrowClick}
                           >
                             Tomorrow
                           </button>
                           <button
-                            className=" text-[#3B3B3B] px-[6px] py-[8px] rounded-[16px] border-[1px] border-[#B4B4B4]"
+                            className=" text-[#3B3B3B] px-[8px] py-[8px] rounded-[16px] border-[1px] border-[#B4B4B4]"
                             onClick={handleTwoDaysAfterClick}
                           >
                             In 2 days
@@ -280,16 +280,19 @@ function App() {
                         </div> */}
                         <div></div>
                       </div>
-                      <div className="space-y-[6px]">
-                        <div className="font-Inter text-[14px] font-normal text-[#3B3B3B]">Notes (optional)</div>
+                      <div className="">
+                        <div className="font-Inter mb-[12px] text-[14px] font-normal text-[#3B3B3B]">
+                          Notes (optional)
+                        </div>
                         <div className="">
                           <textarea
                             name=""
                             id=""
                             value={notes}
                             onChange={(e) => setNotes(e.target.value)}
-                            className={`rounded-[8px] w-[240px] h-[88px] border-2 p-[16px] outline bg-[#F1F1F1] outline-transparent placeholder-[#3B3B3B] text-black font-Inter text-[12px] hover:border-[#3B3B3B]  focus:border-[#4159A5] focus:ring-[#4159A5] active:outline-none border-[#3B3B3B]`}
+                            className={`rounded-[8px] w-[240px] h-[148px] border-2 py-[12px] px-[16px] outline bg-[#F1F1F1] outline-transparent placeholder-[#3B3B3B] text-black font-Inter text-[12px] hover:border-[#3B3B3B]  focus:border-[#4159A5] focus:ring-[#4159A5] active:outline-none border-[#3B3B3B]`}
                             placeholder="Add details for extra content."
+                            style={{ resize: 'none' }}
                           ></textarea>
                         </div>
                         <div className=" flex items-end justify-end">
@@ -319,6 +322,7 @@ function App() {
                         <path
                           d="M21.7765 9.86108L11.9971 19.5531C11.8079 19.7405 11.5513 19.8459 11.2838 19.8459C11.0162 19.8459 10.7596 19.7405 10.5704 19.5531L6.22359 15.2451C5.28521 14.3421 6.73818 12.9001 7.65033 13.8311L11.2828 17.4311L20.3497 8.44707C21.2619 7.51707 22.7158 8.95708 21.7765 9.86108Z"
                           fill="#3B3B3B"
+                          dataTime
                         />
                       </svg>
                       <div className="font-normal  cursor-move font-Inter text-[17px]">MindMemo saved.</div>
