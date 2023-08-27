@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Route, Routes } from "react-router-dom";
 
 function PostData() {
-  const postTask = async (title, url, notes, dataTime, userId) => {
+  const postTask = async (title, url, notes, dataDate, userId) => {
     const response = await fetch(
       `${import.meta.env.VITE_APP_SERVER_URL}/userDetails/userMemo`,
       {
@@ -14,7 +14,7 @@ function PostData() {
           title: title,
           url: url,
           notes: notes,
-          dataTime: dataTime,
+          dataDate: dataDate,
           userId: userId,
         }),
       },
