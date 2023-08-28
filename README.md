@@ -1,11 +1,19 @@
 # Mindmemo
+
+![Marquee](./images/marquee.jpg)
+
 The web extension that helps you remember the content you save for later, later. 
 
 ---
 
 ## What is it?
 
+![Screenshot-1](./images/screenshot.jpg)
+
 Skip the bookmarks and close your never-ending tabs! MindMemo is a progressive web browser extension that helps you re-engage with anything you might search, browse, or stumble upon. With MindMemo, set a reminder to watch a video, read an article, or review a study at a time that works best for you. Sync MindMemo with your Google calendar to receive seamless notifications and keep your saved content top of mind.
+
+![Screenshot-2](./images/screenshot1%20(2).jpg)
+
 How?
 💡Memos - make content discoverable and accessible at anytime, anywhere
 💡Set a reminder:  pick your opportune date and time 
@@ -15,6 +23,8 @@ How?
 💡Save your time
 
 ---
+
+![Promo](./images/promo.jpg)
 
 ## How to use it?
 
@@ -29,6 +39,7 @@ How?
 7. Voila!! Mindmemo has been installed on your device.
 
 ---
+
 
 ## Post Installation steps
 
