@@ -100,7 +100,7 @@ function App() {
     <>
       {isJWT && (
         <>
-          {!isOpen ? (
+          {isOpen ? (
             <div>
               {!saved ? (
                 <Container>
