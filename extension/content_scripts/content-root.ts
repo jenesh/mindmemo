@@ -41,6 +41,30 @@ document.addEventListener('mouseup', () => {
   }
 });
 
+console.log(document.body);
+
+// GET Active Tab and Access to DOM
+// let tabId: number;
+// document.getElementById('accessDOM').addEventListener('click', () => {
+//   chrome.scripting.executeScript({
+//     target: { tabId: tabId },
+//     function: accessDOM,
+//   });
+// });
+
+// function accessDOM() {
+//   // Your DOM access code here
+//   const title = document.title;
+//   alert(`Title of the current page: ${title}`);
+// }
+
+// // Accessing the DOM of the active page
+// const pageContent = document.documentElement.outerHTML;
+
+// // Sending the content back to the extension
+// chrome.runtime.sendMessage({ content: pageContent });
+
+
 // chrome.runtime.sendMessage({ action: 'reloadTabs' });
 
 // contentScript.js
