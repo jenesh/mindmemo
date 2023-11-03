@@ -7,26 +7,29 @@
     "build": "vite build"
   },
   "dependencies": {
+    "@emotion/react": "^11.11.1",
+    "@emotion/styled": "^11.11.0",
     "@heroicons/react": "v1",
     "@popperjs/core": "^2.11.8",
+    "date-fns": "^2.30.0",
     "dayjs": "^1.11.6",
     "react": "^18.2.0",
-    "react-day-picker": "^8.8.0",
+    "react-datepicker": "^4.21.0",
     "react-dom": "^18.2.0",
     "react-scripts": "^5.0.1",
-    "react-tailwindcss-datepicker": "^1.6.6",
+    "styled-components": "^6.1.0",
     "typescript": "^5.0.2"
   },
   "devDependencies": {
     "@types/chrome": "^0.0.206",
     "@types/react": "^18.0.21",
+    "@types/react-datepicker": "^4.19.1",
     "@types/react-dom": "^18.0.6",
     "@vitejs/plugin-react": "^3.1.0",
     "autoprefixer": "^10.4.15",
     "postcss": "^8.4.27",
     "prettier": "^2.5.1",
     "sass": "^1.59.3",
-    "tailwindcss": "^3.3.3",
     "vite": "^4.2.1",
     "vite-plugin-css-injected-by-js": "^3.1.0"
   },
