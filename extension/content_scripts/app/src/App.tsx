@@ -9,6 +9,10 @@ import Saved from './components/Saved';
 import MindMemoIcon from './components/MindMemoIcon';
 
 const MainForm = styled.div`
+  &&& {
+    font-family: Inter,sans-serif;
+  }
+
   background: #ffffff;
   border-radius: 8px;
   padding: 16px;
@@ -16,7 +20,8 @@ const MainForm = styled.div`
   position: relative;
   top: -14px;
   width: 272px;
-  margin-left: 8px;
+  margin: 0 8px;
+  box-sizing: border-box;
 `;
 
 function App() {

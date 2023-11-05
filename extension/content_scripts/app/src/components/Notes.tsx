@@ -8,9 +8,12 @@ const NotesWrapper = styled.div`
 `;
 
 const SectionTitle = styled.p`
-    font-family: Inter,sans-serif;
+    &&& {
+        font-family: Inter,sans-serif;
+    }
     font-size: 14px;
     color: #3B3B3B;
+    margin: 0;
     margin-bottom: 14px;
 `;
 
@@ -19,6 +22,9 @@ interface NotesTextAreaProps {
 }
 
 const NotesTextArea = styled.textarea<NotesTextAreaProps>`
+    &&& {
+        font-family: Inter,sans-serif;
+    }
     height: 148px;
     background: #F1F1F1;
     border-radius: 8px;
@@ -28,7 +34,6 @@ const NotesTextArea = styled.textarea<NotesTextAreaProps>`
     outline: none;
     outline-offset: 0px;
     placeholder: #3B3B3B;
-    font-family: Inter,sans-serif;
     font-size: 14px;
     color: #3B3B3B;
     resize: none;
@@ -42,6 +47,7 @@ const NotesTextArea = styled.textarea<NotesTextAreaProps>`
     &:active {
         outline: none;
     }
+    box-sizing: border-box;
 `;
 
 const  glowing = keyframes`
@@ -51,7 +57,9 @@ const  glowing = keyframes`
 `
 
 const SaveButton = styled.button`
-    font-family: Inter,sans-serif;
+    &&& {
+        font-family: Inter,sans-serif;
+    }
     font-size: 14px;
     color: #FFFFFF;
     padding: 16px;

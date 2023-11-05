@@ -6,9 +6,12 @@ const MemoWrapper = styled.div`
 `;
 
 const SectionTitle = styled.p`
-    font-family: Inter,sans-serif;
+    &&& {
+        font-family: Inter,sans-serif;
+    }
     font-size: 14px;
     color: #3B3B3B;
+    margin: 0;
     margin-bottom: 14px;
 `;
 
@@ -23,6 +26,9 @@ interface InputProps {
 }
 
 export const sharedInputStyles = `
+    &&& {
+        font-family: Inter,sans-serif;
+    }
     background: #FFFFFF;
     border-radius: 8px;
     width: 100%;
@@ -31,7 +37,6 @@ export const sharedInputStyles = `
     outline: none;
     outline-offset: 0px;
     placeholder: #3B3B3B;
-    font-family: Inter,sans-serif;
     font-size: 14px;
     color: #3B3B3B;
     &:hover {
@@ -56,8 +61,10 @@ const UrlInput = styled.input`
 `;
 
 const UrlLabel = styled.label`
+    &&& {
+        font-family: Inter,sans-serif;
+    }
     position: absolute;
-    font-family: Inter,sans-serif;
     font-size: 12px;
     color: #3B3B3B;
     top: 99px;

@@ -11,9 +11,13 @@ const HeaderWrapper = styled.div`
 `;
 
 const Title = styled.h1`
-    font-family: Inter, sans-serif;
+    &&& {
+        font-family: Inter,sans-serif;
+    }
     font-size: 18px;
     color: #000000;
+    margin: 0;
+    padding: 0;
 `;
 
 const CloseSvg = styled.svg`

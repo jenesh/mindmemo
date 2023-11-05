@@ -9,7 +9,9 @@ const MemoWrapper = styled.div`
 `;
 
 const SectionTitle = styled.p`
-    font-family: Inter,sans-serif;
+    &&& {
+        font-family: Inter,sans-serif;
+    }
     font-size: 14px;
     color: #3B3B3B;
     margin-bottom: 14px;
@@ -24,7 +26,9 @@ const InputContainer = styled.div`
 const DaysRow = styled.div`
     display: flex;
     justify-content: space-between;
+    margin: 0;
     margin-bottom: 16px;
+    height: 34px;
 `;
 
 const DayButton = styled.button`
@@ -47,6 +51,8 @@ const StyledDatePicker = styled(DatePicker)`
     border-radius: 8px;
     border: 2px solid #3B3B3B;
     margin-top: 4px;
+    box-sizing: border-box;
+    padding: 12px 16px;
 `;
 
 const CalendarInput = styled.input`
@@ -57,8 +63,10 @@ const CalendarInput = styled.input`
 `;
 
 const CalendarLabel = styled.label`
+    &&& {
+        font-family: Inter,sans-serif;
+    }
     position: absolute;
-    font-family: Inter,sans-serif;
     font-size: 12px;
     color: #3B3B3B;
     top: 247px;
@@ -125,7 +133,7 @@ const RemindMe: React.FC<RemindMeProps> = ({ startDate, setStartDate, handleToda
             <DaysRow>
                 <DayButton onClick={handleTodayClick}>Today</DayButton>
                 <DayButton onClick={handleTomorrowClick}>Tomorrow</DayButton>
-                <DayButton onClick={handleTowDaysAfterClick}>In 2 days</DayButton>
+                <DayButton onClick={handleTowDaysAfterClick}>2 days</DayButton>
             </DaysRow>
 
             <StyledDatePicker

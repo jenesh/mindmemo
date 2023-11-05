@@ -44,12 +44,16 @@ const MemoDetailsWrapper = styled.div`
 `;
 
 const SectionTitle = styled.p`
-    font-family: Inter, sans-serif;
+    &&& {
+        font-family: Inter,sans-serif;
+    }
     font-size: 18px;
 `;
 
 const MemoTitle = styled.a`
-    font-family: Inter, sans-serif;
+    &&& {
+        font-family: Inter,sans-serif;
+    }
     font-weight: 800;
     text-decoration: underline;
 `;
@@ -61,12 +65,16 @@ const DateRow = styled.div`
 `;
 
 const FormattedDate = styled.p`
-    font-family: Inter, sans-serif;
+    &&& {
+        font-family: Inter,sans-serif;
+    }
     margin-left: 12px;
 `;
 
 const MemoUrl = styled.p`
-    font-family: Inter,sans-serif;
+    &&& {
+        font-family: Inter,sans-serif;
+    }
     color: #3B3B3B;
     font-size: 16px;
     overflow: hidden;
@@ -74,7 +82,9 @@ const MemoUrl = styled.p`
 `;
 
 const MemoNotes = styled.p`
-    font-family: Inter,sans-serif;
+    &&& {
+        font-family: Inter,sans-serif;
+    }
     color: #3B3B3B;
     font-size: 16px;
     italic: true;
