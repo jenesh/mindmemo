@@ -30,8 +30,9 @@ function App() {
   const [dragging, setDragging] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [saved, setSaved] = useState(false);
-  const pageHeading = document.querySelectorAll('h1')[0].textContent
-  const pageSubHeading = document.querySelectorAll('h2')[0].textContent + '...'
+  const pageHeading = document.querySelectorAll('h1')[0]?.textContent
+  let pageSubHeading = document.querySelectorAll('h2')[0]?.textContent
+  pageSubHeading = pageSubHeading ? pageSubHeading + "..." : pageSubHeading
   const [title, setTitle] = useState(pageHeading || '');
   const [url, setUrl] = useState(window.location.href);
   const [notes, setNotes] = useState(pageSubHeading || '');
