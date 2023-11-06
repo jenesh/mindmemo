@@ -31,17 +31,31 @@ const DaysRow = styled.div`
     height: 34px;
 `;
 
-const DayButton = styled.button`
+interface DayButtonProps {
+    isSelected: boolean;
+}
+
+const DayButton = styled.button<DayButtonProps>`
     font-size: 14px;
     color: #3B3B3B;
     padding: 8px 12px;
     border-radius: 16px;
     border: 1px solid #B4B4B4;
-    background: #FFFFFF;
+    box-sizing: border-box;
+    background: ${(props) => props.isSelected ? "#FFFFFF" : "#F1F1F1"};
+    border-color: ${(props) => props.isSelected ? "#5C73BC" : "#B4B4B4"};
 
     &:hover {
         border: 1px solid #3B3B3B;
         cursor: pointer;
+    }
+
+    &:focus {
+        border-color: #5C73BC;
+    }
+
+    &:active {
+        border-color: #5C73BC;
     }
 `;
 
@@ -86,6 +100,7 @@ interface RemindMeProps {
     handleTodayClick?: () => void;
     handleTomorrowClick?: () => void;
     handleTowDaysAfterClick?: () => void;
+    currentSelectedOption: number;
 }
 
 const icon = (
@@ -112,7 +127,14 @@ const icon = (
     </svg >
 )
 
-const RemindMe: React.FC<RemindMeProps> = ({ startDate, setStartDate, handleTodayClick, handleTomorrowClick, handleTowDaysAfterClick }) => {
+const RemindMe: React.FC<RemindMeProps> = ({
+    startDate,
+    setStartDate,
+    handleTodayClick,
+    handleTomorrowClick,
+    handleTowDaysAfterClick,
+    currentSelectedOption
+}) => {
     const date = new Date();
     let day = date.getDate();
     let month = date.getMonth() + 1;
@@ -127,14 +149,22 @@ const RemindMe: React.FC<RemindMeProps> = ({ startDate, setStartDate, handleToda
         );
     }
 
+    const selectedOption = (option: number) => {
+        if (option === currentSelectedOption) {
+            return true;
+        } else {
+            return false;
+        }
+    };
+
     return (
         <MemoWrapper>
             <SectionTitle>Remind me</SectionTitle>
             <DaysRow>
-                <DayButton onClick={handleTodayClick}>Today</DayButton>
-                <DayButton onClick={handleTomorrowClick}>Tomorrow</DayButton>
-                <DayButton onClick={handleTowDaysAfterClick}>2 days</DayButton>
-            </DaysRow>
+                <DayButton onClick={handleTodayClick} isSelected={selectedOption(1)}>Today</DayButton>
+                <DayButton onClick={handleTomorrowClick} isSelected={selectedOption(2)}> Tomorrow</DayButton>
+                <DayButton onClick={handleTowDaysAfterClick} isSelected={selectedOption(3)}> 2 days</DayButton>
+            </DaysRow >
 
             <StyledDatePicker
                 showIcon={false}
@@ -153,7 +183,7 @@ const RemindMe: React.FC<RemindMeProps> = ({ startDate, setStartDate, handleToda
             {/* {value.startDate === null && error && (
                 <div className="font-Inter text-[12px] text-red-500 text-sm pl-4">Date required</div>
             )} */}
-        </MemoWrapper>
+        </MemoWrapper >
     );
 }
 

@@ -39,6 +39,7 @@ function App() {
   const [titleUp, setTitleUp] = useState(false);
   const [startDate, setStartDate] = useState(currentDate);
   const [canSave, setCanSave] = useState(false);
+  const [currentSelectedOption, setCurrentSelectedOption] = useState(1);
 
   useEffect(() => {
     if (title.length > 0 && url.length > 0 && startDate !== null) {
@@ -51,6 +52,7 @@ function App() {
   const handleTodayClick = () => {
     console.log(`handleTodayClick`)
     setStartDate(new Date())
+    setCurrentSelectedOption(1)
   };
 
   const handleTomorrowClick = () => {
@@ -59,6 +61,7 @@ function App() {
     tomorrow.setDate(tomorrow.getDate() + 1);
     console.log(`handleTomorrowClick`)
     setStartDate(tomorrow)
+    setCurrentSelectedOption(2)
   };
 
   const handleTwoDaysAfterClick = () => {
@@ -66,6 +69,7 @@ function App() {
     twoDaysAfter.setDate(twoDaysAfter.getDate() + 2);
     console.log(`handleTwoDaysAfterClick`)
     setStartDate(twoDaysAfter)
+    setCurrentSelectedOption(3)
   };
 
   const handleMouseDown = (e) => {
@@ -126,6 +130,7 @@ function App() {
                       handleTodayClick={handleTodayClick}
                       handleTomorrowClick={handleTomorrowClick}
                       handleTowDaysAfterClick={handleTwoDaysAfterClick}
+                      currentSelectedOption={currentSelectedOption}
                     />
                     <Notes
                       notes={notes}
