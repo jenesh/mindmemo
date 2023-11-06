@@ -135,7 +135,11 @@ function App() {
                   </MainForm>
                 </Container>
               ) : (
-                <div id="content-script-root" className="h-[337px] w-[288px] bg-[#f1f1f1] rounded-2xl">
+                <div id="content-script-root">
+                  {/* 
+                    FUTURE FEATURE: NEW STATE THAT CHECKS IF A LINK IS ALREADY AN ACTIVE TASK 
+                    PROBABLY A REQURE A NEW TASKS DB AND CAN HAVE THE LINK AS THE PK
+                  */}
                   <Saved
                     handleMouseDown={handleMouseDown}
                     isOpen={isOpen}

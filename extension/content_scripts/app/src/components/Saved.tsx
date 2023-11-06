@@ -99,8 +99,23 @@ const HorizontalLine = styled.hr`
     margin: 12px 0;
 `;
 
-const ViewOnCalendar = styled.button`
+const ViewOnCalendarWrapper = styled.div`
+    display: flex;
+    justify-content: center;
+    padding: 0 16px 16px 0;
+    margin-top: -12px;
+`;
 
+const ViewOnCalendar = styled.a`
+    &&& {
+        font-family: Inter, sans-serif;
+    }
+    font-weight: 500;
+    color: blue;
+
+    &:hover {
+        text-decoration: underline;
+    }
 `;
 
 const formatDateToCustomString = (date: Date) => {
@@ -115,6 +130,14 @@ const formatDateToCustomString = (date: Date) => {
     return `${day}, ${dayOfMonth} ${month} ${year}`;
 }
 
+var formattedDateForCal = (desiredDate: Date) => {
+    return desiredDate.getFullYear() + '/' +
+        (desiredDate.getMonth() + 1).toString().padStart(2, '0') + '/' +
+        desiredDate.getDate().toString().padStart(2, '0');
+}
+
+
+
 
 interface SavedProps {
     handleMouseDown: (e: React.MouseEvent) => void;
@@ -128,6 +151,8 @@ interface SavedProps {
 
 const Saved: React.FC<SavedProps> = ({ handleMouseDown, isOpen, setIsOpen, title, url, startDate, notes }) => {
     const formattedDate = formatDateToCustomString(startDate);
+    const viewCalLink = `https://calendar.google.com/calendar/u/0/r/day/${formattedDateForCal(startDate)}`
+
     return (
         <SavedWrapper>
             <TitleWrapper onMouseDown={handleMouseDown}>
@@ -180,11 +205,15 @@ const Saved: React.FC<SavedProps> = ({ handleMouseDown, isOpen, setIsOpen, title
                     <FormattedDate>{formattedDate}</FormattedDate>
                 </DateRow>
 
-                <ViewOnCalendar>
-                    View Calendar
-                </ViewOnCalendar>
 
             </MemoDetailsWrapper>
+
+
+            <ViewOnCalendarWrapper>
+                <ViewOnCalendar href={viewCalLink} target="_blank">
+                    View Calendar
+                </ViewOnCalendar>
+            </ViewOnCalendarWrapper>
         </SavedWrapper>
     )
 }
