@@ -99,6 +99,10 @@ const HorizontalLine = styled.hr`
     margin: 12px 0;
 `;
 
+const ViewOnCalendar = styled.button`
+
+`;
+
 const formatDateToCustomString = (date: Date) => {
     const daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
     const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
@@ -175,6 +179,10 @@ const Saved: React.FC<SavedProps> = ({ handleMouseDown, isOpen, setIsOpen, title
                     </svg>
                     <FormattedDate>{formattedDate}</FormattedDate>
                 </DateRow>
+
+                <ViewOnCalendar>
+                    View Calendar
+                </ViewOnCalendar>
 
             </MemoDetailsWrapper>
         </SavedWrapper>
