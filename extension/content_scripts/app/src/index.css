@@ -5,7 +5,3 @@
   bottom: 10px;
   right: 10px;
 }
-
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
