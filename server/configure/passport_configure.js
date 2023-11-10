@@ -44,7 +44,7 @@ passport.use(
       clientSecret: process.env.Google_Client_Secret,
       callbackURL: "https://mymindmemo.com/authRoutes/google/callback",
       accessType: "offline",
-      scope: ["https://www.googleapis.com/auth/calendar", "https://www.googleapis.com/auth/userinfo.email", "https://www.googleapis.com/auth/userinfo.profile", "https://www.googleapis.com/auth/tasks"],
+      scope: ["https://www.googleapis.com/auth/calendar", "https://www.googleapis.com/auth/userinfo.email", "https://www.googleapis.com/auth/userinfo.profile", "https://www.googleapis.com/auth/tasks", "openid"],
       // "https://accounts.google.com/", 'https://www.googleapis.com/auth/calendar.readonly','https://www.googleapis.com/auth/plus.login'
     },
     async function (accessToken, refreshToken, profile, cb) {
