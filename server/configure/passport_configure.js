@@ -48,18 +48,19 @@ passport.use(
       // "https://accounts.google.com/", 'https://www.googleapis.com/auth/calendar.readonly','https://www.googleapis.com/auth/plus.login'
     },
     async function (accessToken, refreshToken, profile, cb) {
-      console.log("------prof------");
+      console.log("------Profile Start------");
       console.log(refreshToken);
       console.log(profile);
-      console.log("------------");
+      console.log("------Profile End------\n");
       try {
         let user = await prisma.User.findUnique({
           where: {
             googleId: profile.id,
-          },
+        },
         });
 
         if (!user) {
+          console.log( "------User does not exist, creating-----\n")
           const oAuth2Client = new google.auth.OAuth2(
             process.env.Google_Client_ID,
             process.env.Google_Client_Secret
@@ -89,6 +90,7 @@ passport.use(
             },
           });
         } else {
+          console.log( "------User exists updating-----\n")
           await prisma.User.update({
             where: { googleId: profile.id },
             data: {
@@ -98,9 +100,9 @@ passport.use(
           });
         }
 
-        console.log("------passportuser------");
+        console.log("------User from Passport------");
         console.log(user);
-        console.log("------------");
+        console.log("------------\n");
 
         return cb(null, user);
       } catch (error) {

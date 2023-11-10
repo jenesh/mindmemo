@@ -33,9 +33,9 @@ app.get(
 );
 
 app.get("/protected", (req, res) => {
-  console.log("------api------");
+  console.log("------Route: /protected Start------");
   console.log(req.user);
-  console.log("------------");
+  console.log("------Route: /protected End------\n");
   // AuthenticationController.googleCallback(req, res)
   res.redirect(
     `https://mindmemo-auth.vercel.app/?data=${encodeURIComponent(
