@@ -15,7 +15,7 @@ app.use(cookieParser());
 
 // Function to add a new entry
 async function addEntry(userId, title, url, dataTime, notes) {
-  console.log(`addEntry called`)
+  console.log(`addEntry called`);
   try {
     const existingMemo = await prisma.userMemoDetails.findFirst({
       where: {
@@ -44,11 +44,20 @@ async function addEntry(userId, title, url, dataTime, notes) {
   }
 }
 
-async function userMemoTask(res, title, url, dateTiming, notes, accessToken, refreshToken, taskListId) {
-  console.log(`userMemoTask called`)
+async function userMemoTask(
+  res,
+  title,
+  url,
+  dateTiming,
+  notes,
+  accessToken,
+  refreshToken,
+  taskListId
+) {
+  console.log(`userMemoTask called`);
   const oAuth2Client = new google.auth.OAuth2(
     process.env.Google_Client_ID,
-    process.env.Google_Client_Secret,
+    process.env.Google_Client_Secret
   );
   const userTokens = {
     access_token: accessToken,
@@ -58,42 +67,42 @@ async function userMemoTask(res, title, url, dateTiming, notes, accessToken, ref
 
   try {
     const tasks = google.tasks({ version: "v1", auth: oAuth2Client });
-    console.log(`Tasks retrieved successfully`)
+    console.log(`Tasks retrieved successfully`);
+
+    const newTask = {
+      title: title,
+      notes: `Notes: ${notes}\nURL: ${url}`,
+      due: dateTiming,
+      defaultReminders: [
+        { method: "email", minutes: 60 },
+        { method: "popup", minutes: 30 },
+      ],
+    };
+
+    try {
+      const response = await tasks.tasks.insert({
+        requestBody: newTask,
+        tasklist: taskListId,
+      });
+      console.log(`Insert Tasks Tasks successful`, response);
+      res.status(200).send("Event created");
+    } catch (error) {
+      console.log(`Error while inserting Tasks Tasks: ${error}`);
+      res.status(500).json({ error: "Error while adding entry" });
+    }
   } catch (err) {
-    console.log(`Error while retreiving Tasks object: ${err}`)
-  }
-
-  const newTask = {
-    title: title,
-    notes: `Notes: ${notes}\nURL: ${url}`,
-    due: dateTiming,
-    defaultReminders: [
-      { method: "email", minutes: 60 },
-      { method: "popup", minutes: 30 },
-    ],
-  };
-
-  try {
-    const response = await tasks.tasks.insert({
-      requestBody: newTask,
-      tasklist: taskListId,
-    });
-    console.log(`Insert Tasks Tasks successful`, response);
-    res.status(200).send("Event created");
-  } catch (error) {
-    console.log(`Error while inserting Tasks Tasks: ${error}`)
-    res.status(500).json({ error: "Error while adding entry" });
+    console.log(`Error while retreiving Tasks object: ${err}`);
   }
 }
 
 const userMemo = async (req, res) => {
-  console.log(`userMemo called`)
+  console.log(`userMemo called`);
   const { title, url, dataDate, notes, userId } = req.body;
   console.log(req.body);
   // const fullDateTime = `${dataDate} ${time}`;
-  const dateTiming = new Date(dataDate).toISOString(); 
+  const dateTiming = new Date(dataDate).toISOString();
   console.log(dataDate, dateTiming);
-  
+
   try {
     // const user = req.user;
     const newEntry = await addEntry(userId, title, url, dateTiming, notes);
@@ -111,15 +120,24 @@ const userMemo = async (req, res) => {
       },
     });
 
-    console.log(`addEntry return: `, newEntry)
-    console.log(`userMemo user: `, user)
+    console.log(`addEntry return: `, newEntry);
+    console.log(`userMemo user: `, user);
     // await userMemmoEvent(res, title, url, dateTiming, notes, timeZone, user.accessToken, user.refreshToken);
-  
-    await userMemoTask(res, title, url, dateTiming, notes, user.accessToken, user.refreshToken, user.taskListId);
+
+    await userMemoTask(
+      res,
+      title,
+      url,
+      dateTiming,
+      notes,
+      user.accessToken,
+      user.refreshToken,
+      user.taskListId
+    );
 
     // res.status(201).json(newEntry);
   } catch (error) {
-    console.log(`userMemo error: `, error)
+    console.log(`userMemo error: `, error);
     res.status(500).json({ error: "Error adding entry" });
   }
 };
@@ -184,7 +202,5 @@ const userMemo = async (req, res) => {
 //   );
 // }
  */
-
-
 
 module.exports = { userMemo };
