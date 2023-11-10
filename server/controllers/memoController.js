@@ -110,6 +110,9 @@ const userMemo = async (req, res) => {
         taskListId: true,
       },
     });
+
+    console.log(`addEntry return: `, newEntry)
+    console.log(`userMemo user: `, user)
     // await userMemmoEvent(res, title, url, dateTiming, notes, timeZone, user.accessToken, user.refreshToken);
   
     await userMemoTask(res, title, url, dateTiming, notes, user.accessToken, user.refreshToken, user.taskListId);
