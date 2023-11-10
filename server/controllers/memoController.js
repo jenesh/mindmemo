@@ -56,7 +56,12 @@ async function userMemoTask(res, title, url, dateTiming, notes, accessToken, ref
   };
   oAuth2Client.setCredentials(userTokens);
 
-  const tasks = google.tasks({ version: "v1", auth: oAuth2Client });
+  try {
+    const tasks = google.tasks({ version: "v1", auth: oAuth2Client });
+    console.log(`Tasks retrieved successfully`)
+  } catch (err) {
+    console.log(`Error while retreiving Tasks object: ${err}`)
+  }
 
   const newTask = {
     title: title,
@@ -73,10 +78,10 @@ async function userMemoTask(res, title, url, dateTiming, notes, accessToken, ref
       requestBody: newTask,
       tasklist: taskListId,
     });
-    console.log(response);
+    console.log(`Insert Tasks Tasks successful`, response);
     res.status(200).send("Event created");
   } catch (error) {
-    console.log(error);
+    console.log(`Error while inserting Tasks Tasks: ${error}`)
     res.status(500).json({ error: "Error while adding entry" });
   }
 }

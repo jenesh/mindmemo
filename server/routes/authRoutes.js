@@ -18,8 +18,9 @@ app.get(
       "profile",
       "https://www.googleapis.com/auth/calendar",
       "https://www.googleapis.com/auth/tasks",
+      "openid",
     ],
-  }),
+  })
 );
 
 app.get(
@@ -28,7 +29,7 @@ app.get(
     successRedirect: "/authRoutes/protected",
     failureRedirect: "/auth/failure",
     scope: ["email", "profile", "https://www.googleapis.com/auth/calendar"],
-  }),
+  })
 );
 
 app.get("/protected", (req, res) => {
@@ -38,8 +39,8 @@ app.get("/protected", (req, res) => {
   // AuthenticationController.googleCallback(req, res)
   res.redirect(
     `https://mindmemo-auth.vercel.app/?data=${encodeURIComponent(
-      JSON.stringify(req.user),
-    )}`,
+      JSON.stringify(req.user)
+    )}`
   );
 });
 
