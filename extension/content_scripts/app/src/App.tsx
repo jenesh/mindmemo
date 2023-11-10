@@ -98,11 +98,12 @@ function App() {
   const handleSave = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     setSaved(true);
-    let dataToPass = { title: title, url: url, dataDate: startDate, notes: notes };
+    let dataToPass = { title: title, url: url, dataDate: startDate.toString(), notes: notes };
     dataToPass = encodeURIComponent(JSON.stringify(dataToPass));
     // let queryString = Object.keys(dataToPass)
     //   .map((key) => key + '=' + encodeURIComponent(dataToPass[key]))
     //   .join('&');
+    console.log(`===>`, startDate, dataToPass)
     let newWindow = window.open(`https://mindmemo-auth.vercel.app/post?post-task=${dataToPass}`, '_blank');
   };
 
