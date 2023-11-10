@@ -10,11 +10,11 @@ const cookieParser = require("cookie-parser");
 const cors = require("cors");
 
 const privacyPolicy = `
-Privacy Policy for MindMemo
+<h1>Privacy Policy for MindMemo</h1>
 
-Last Updated: 11/10/2023
+<p>Last Updated: 11/10/2023</p>
 
-1. Introduction:
+<p>1. Introduction:
    Welcome to MindMemo. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you use our Google Chrome extension.
 
 2. Information We Collect:
@@ -53,6 +53,7 @@ Last Updated: 11/10/2023
 By using MindMemo, you agree to the terms outlined in this Privacy Policy.
 
 Contact email: askmindmemo@gmail.com
+</p>
 `;
 
 app.use(
