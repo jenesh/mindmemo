@@ -141,7 +141,7 @@ async function userMemoTask(res, title, url, dateTiming, notes, accessToken, ref
 // }
 
 const userMemo = async (req, res) => {
-  console.log(`addEntry called`)
+  console.log(`userMemo called`)
   const { title, url, dataDate, notes, userId } = req.body;
   console.log(req.body);
   // const fullDateTime = `${dataDate} ${time}`;

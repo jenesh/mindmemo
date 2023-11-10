@@ -98,7 +98,7 @@ function App() {
   const handleSave = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     setSaved(true);
-    let dataToPass = { title: title, url: url, dataDate: startDate.toString(), notes: notes };
+    let dataToPass = { title: title, url: url, dataDate: startDate.toLocaleString(), notes: notes };
     dataToPass = encodeURIComponent(JSON.stringify(dataToPass));
     // let queryString = Object.keys(dataToPass)
     //   .map((key) => key + '=' + encodeURIComponent(dataToPass[key]))
