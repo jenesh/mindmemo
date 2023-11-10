@@ -86,6 +86,42 @@ async function userMemoTask(res, title, url, dateTiming, notes, accessToken, ref
   }
 }
 
+const userMemo = async (req, res) => {
+  console.log(`userMemo called`)
+  const { title, url, dataDate, notes, userId } = req.body;
+  console.log(req.body);
+  // const fullDateTime = `${dataDate} ${time}`;
+  const dateTiming = new Date(dataDate).toISOString(); 
+  console.log(dataDate, dateTiming);
+  
+  try {
+    // const user = req.user;
+    const newEntry = await addEntry(userId, title, url, dateTiming, notes);
+
+    //Calling Calendar Event function
+    // userMemmoEvent(title, url,dateTiming, notes);
+    const user = await prisma.user.findUnique({
+      where: {
+        id: userId,
+      },
+      select: {
+        accessToken: true,
+        refreshToken: true,
+        taskListId: true,
+      },
+    });
+    // await userMemmoEvent(res, title, url, dateTiming, notes, timeZone, user.accessToken, user.refreshToken);
+  
+    await userMemoTask(res, title, url, dateTiming, notes, user.accessToken, user.refreshToken, user.taskListId);
+
+    // res.status(201).json(newEntry);
+  } catch (error) {
+    console.log(`userMemo error: `, error)
+    res.status(500).json({ error: "Error adding entry" });
+  }
+};
+
+/*
 // function userMemmoEvent(title, url, dateTiming, notes, timeZone, accessToken, refreshToken){
 
 //   const oauth2Client = new google.auth.OAuth2(
@@ -144,39 +180,8 @@ async function userMemoTask(res, title, url, dateTiming, notes, accessToken, ref
 //     }
 //   );
 // }
+ */
 
-const userMemo = async (req, res) => {
-  console.log(`userMemo called`)
-  const { title, url, dataDate, notes, userId } = req.body;
-  console.log(req.body);
-  // const fullDateTime = `${dataDate} ${time}`;
-  const dateTiming = new Date(dataDate).toISOString(); 
-  console.log(dataDate, dateTiming);
-  
-  try {
-    // const user = req.user;
-    const newEntry = await addEntry(userId, title, url, dateTiming, notes);
 
-    //Calling Calendar Event function
-    // userMemmoEvent(title, url,dateTiming, notes);
-    const user = await prisma.user.findUnique({
-      where: {
-        id: userId,
-      },
-      select: {
-        accessToken: true,
-        refreshToken: true,
-        taskListId: true,
-      },
-    });
-    // await userMemmoEvent(res, title, url, dateTiming, notes, timeZone, user.accessToken, user.refreshToken);
-  
-    await userMemoTask(res, title, url, dateTiming, notes, user.accessToken, user.refreshToken, user.taskListId);
-
-    // res.status(201).json(newEntry);
-  } catch (error) {
-    res.status(500).json({ error: "Error adding entry" });
-  }
-};
 
 module.exports = { userMemo };
