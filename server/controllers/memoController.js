@@ -15,6 +15,7 @@ app.use(cookieParser());
 
 // Function to add a new entry
 async function addEntry(userId, title, url, dataTime, notes) {
+  console.log(`addEntry called`)
   try {
     const existingMemo = await prisma.userMemoDetails.findFirst({
       where: {
@@ -44,6 +45,7 @@ async function addEntry(userId, title, url, dataTime, notes) {
 }
 
 async function userMemoTask(res, title, url, dateTiming, notes, accessToken, refreshToken, taskListId) {
+  console.log(`userMemoTask called`)
   const oAuth2Client = new google.auth.OAuth2(
     process.env.Google_Client_ID,
     process.env.Google_Client_Secret,
@@ -139,6 +141,7 @@ async function userMemoTask(res, title, url, dateTiming, notes, accessToken, ref
 // }
 
 const userMemo = async (req, res) => {
+  console.log(`addEntry called`)
   const { title, url, dataDate, notes, userId } = req.body;
   console.log(req.body);
   // const fullDateTime = `${dataDate} ${time}`;
