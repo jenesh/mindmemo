@@ -145,7 +145,9 @@ const userMemo = async (req, res) => {
   const { title, url, dataDate, notes, userId } = req.body;
   console.log(req.body);
   // const fullDateTime = `${dataDate} ${time}`;
-  const dateTiming = new Date(dataDate).toISOString();
+  const dateTiming = new Date(dataDate).toISOString(); 
+  console.log(dataDate, dataDate.toISOString(), dateTiming);
+  
   try {
     // const user = req.user;
     const newEntry = await addEntry(userId, title, url, dateTiming, notes);
